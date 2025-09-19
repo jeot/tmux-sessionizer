@@ -40,11 +40,12 @@ first file harpoon.  M-h is first sessionizer command.
 
 **vim**
 ```lua
-vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
-vim.keymap.set("n", "<M-h>", "<cmd>silent !tmux neww tmux-sessionizer -s 0<CR>")
-vim.keymap.set("n", "<M-t>", "<cmd>silent !tmux neww tmux-sessionizer -s 1<CR>")
-vim.keymap.set("n", "<M-n>", "<cmd>silent !tmux neww tmux-sessionizer -s 2<CR>")
-vim.keymap.set("n", "<M-s>", "<cmd>silent !tmux neww tmux-sessionizer -s 3<CR>")
+-- the 99 is used for avoiding screen flashing
+vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww -dt 99 tmux-sessionizer<CR>")
+vim.keymap.set("n", "<M-h>", "<cmd>silent !tmux neww -dt 99 tmux-sessionizer -s 0<CR>")
+vim.keymap.set("n", "<M-t>", "<cmd>silent !tmux neww -dt 99 tmux-sessionizer -s 1<CR>")
+vim.keymap.set("n", "<M-n>", "<cmd>silent !tmux neww -dt 99 tmux-sessionizer -s 2<CR>")
+vim.keymap.set("n", "<M-s>", "<cmd>silent !tmux neww -dt 99 tmux-sessionizer -s 3<CR>")
 ```
 
 **zsh**
@@ -56,13 +57,25 @@ bindkey -s '\en' "tmux-sessionizer -s 2\n"
 bindkey -s '\es' "tmux-sessionizer -s 3\n"
 ```
 
+**fish**
+```bash
+# ~/.config/fish/config.fish
+function fish_user_key_bindings
+  bind ctrl-f 'tmux-sessionizer'
+  bind ctrl-h,ctrl-h 'tmux a'
+  bind alt-n 'nvim'
+end
+```
+
 **tmux**
 ```bash
+# the 99 is used for avoiding screen flashing
 bind-key -r f run-shell "tmux neww ~/.local/bin/tmux-sessionizer"
-bind-key -r M-h run-shell "tmux neww tmux-sessionizer -s 0"
-bind-key -r M-t run-shell "tmux neww tmux-sessionizer -s 1"
-bind-key -r M-n run-shell "tmux neww tmux-sessionizer -s 2"
-bind-key -r M-s run-shell "tmux neww tmux-sessionizer -s 3"
+bind-key -n M-h run-shell "tmux neww -dt 99 tmux-sessionizer -s 0"
+bind-key -n M-t run-shell "tmux neww -dt 99 tmux-sessionizer -s 1"
+bind-key -n M-n run-shell "tmux neww -dt 99 tmux-sessionizer -s 2"
+bind-key -n M-s run-shell "tmux neww -dt 99 tmux-sessionizer -s 3"
+bind-key -n M-c run-shell "tmux neww -dt 99 tmux-sessionizer -s 4 --vsplit"
 ```
 
 ## Enable Logs

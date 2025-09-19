@@ -273,7 +273,7 @@ handle_window_session_cmd() {
         switch_to "$target"
     else
         log "executing session command: tmux neww -dt $target $session_cmd"
-        tmux neww -dt $target "$session_cmd"
+        tmux neww -n $session_cmd -dt $target "$session_cmd"
         hydrate "$target" "$selected"
         tmux select-window -t $target
     fi
